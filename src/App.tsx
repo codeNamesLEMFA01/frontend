@@ -7,6 +7,27 @@ import TrendsTopNamesComponent from "./components/TrendsComponent/TrendsTopNames
 import Hero from "./components/hero/Hero"
 
 function App() {
+  const { data: names } = useQuery({
+    queryKey: ["names"],
+    queryFn: async () => await getTotalBySex(),
+    retry: false,
+    staleTime: Infinity,
+  })
+  const [data, setData] = useState<IObjAcc>()
+
+  useEffect(() => {
+    if (!names) return
+    const obj: IObjAcc = { x: [], yM: [], yF: [] }
+    const data = Object.entries(names.data).reduce((acc, [key, value]) => {
+      acc.yM.push(value.M)
+      acc.yF.push(value.F)
+      acc.x.push(key)
+      return acc
+    }, obj)
+    console.log("🆘 DATA", data)
+    setData(data)
+  }, [names])
+
   return (
     <Box>
       <Hero />
