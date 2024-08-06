@@ -15,6 +15,7 @@ module.exports = {
     "^@src/store/(.*)$",
     "^@src/utils/(.*)$",
     "^@src/types/(.*)$",
+    "^@src/constants/(.*)$",
     "^assets/(.*)$",
     "^[./]",
   ],
