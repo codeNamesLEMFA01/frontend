@@ -1,5 +1,3 @@
-// import { Palette } from "@mui/material/styles"
-// import { CustomPalette } from "../const/customPalette"
 import { CustomPalette } from "../const/customPalette"
 
 declare module "@mui/material/styles" {
