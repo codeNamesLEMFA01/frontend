@@ -1,4 +1,4 @@
-import { ITotalBySex } from "@src/types/api.types"
+import { ITotalBySex } from "../types/names.types"
 
 const BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL
 const NAMES_URL = `${BASE_URL}/names`

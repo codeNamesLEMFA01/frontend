@@ -3,6 +3,7 @@ export interface ITotalBySex {
     [key: string]: {
       F: number
       M: number
+      total: number
     }
   }
   total: {
