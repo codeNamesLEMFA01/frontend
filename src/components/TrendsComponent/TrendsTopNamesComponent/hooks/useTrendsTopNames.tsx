@@ -32,10 +32,9 @@ const useTrendsTopNames = () => {
     staleTime: Infinity,
   })
   const [isFemale, setIsFemale] = useState(false)
-  // const [dateRange, setDateRange] = useState([1880, 2018])
   const countRef = useRef(0)
+
   const debounceRefetch = useDebouncedCallback(() => {
-    console.log("🆘 Called")
     refetch()
   }, 1000)
 
@@ -84,14 +83,8 @@ const useTrendsTopNames = () => {
 
   useEffect(() => {
     if (!countRef.current) return
-    console.log("🆘 TOPN", inputQueryParams.topN)
     debounceRefetch()
   }, [inputQueryParams, debounceRefetch])
-
-  useEffect(() => {
-    if (!trendsTopNames) return
-    console.log("🆘 trends", trendsTopNames)
-  }, [trendsTopNames])
 
   return {
     trendsTopNames,

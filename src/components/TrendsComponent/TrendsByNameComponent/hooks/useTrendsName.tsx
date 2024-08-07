@@ -29,7 +29,6 @@ const useTrendsName = () => {
 
   function handleChangeName(value: string | null) {
     if (!value) return
-    console.log("🆘 ON CHANGE")
     setSelectedName(value)
     refetch()
   }
