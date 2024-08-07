@@ -13,7 +13,7 @@ import {
   TrendsTopNamesQueryEnum,
 } from "@src/services/types/trends.type"
 
-import { ChecboxFemale, ChecboxMale } from "@src/components/common/Checboxes"
+import { CheckboxFemale, CheckboxMale } from "@src/components/common/Checkboxes"
 import { TypoName, TypoNumber } from "@src/components/common/Typo"
 import ResponsivePlot from "@src/components/graphs/ResponsivePlot"
 import SectionLayout from "@src/components/layout/SectionLayout"
@@ -68,7 +68,7 @@ const TrendsTopNamesComponent = () => {
                 label="Femmes"
                 sx={SxFormControlLabel(isFemale, "female")}
                 control={
-                  <ChecboxFemale
+                  <CheckboxFemale
                     checked={isFemale}
                     onChange={() => setIsFemale(!isFemale)}
                   />
@@ -78,7 +78,7 @@ const TrendsTopNamesComponent = () => {
                 label="Hommes"
                 sx={SxFormControlLabel(!isFemale, "male")}
                 control={
-                  <ChecboxMale
+                  <CheckboxMale
                     checked={!isFemale}
                     onChange={() => setIsFemale(!isFemale)}
                   />

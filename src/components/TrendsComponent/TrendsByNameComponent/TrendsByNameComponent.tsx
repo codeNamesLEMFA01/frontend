@@ -1,3 +1,5 @@
+import { useRef } from "react"
+
 import {
   Autocomplete,
   Box,
@@ -11,10 +13,10 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp"
 import { customPalette } from "@src/theme/const/customPalette"
 
 import {
-  ChecboxFemale,
-  ChecboxGroups,
-  ChecboxMale,
-} from "@src/components/common/Checboxes"
+  CheckboxFemale,
+  CheckboxGroups,
+  CheckboxMale,
+} from "@src/components/common/Checkboxes"
 import { TypoNumber } from "@src/components/common/Typo"
 
 import ResponsivePlot from "../../graphs/ResponsivePlot"
@@ -30,6 +32,9 @@ const TrendsByNameComponent = () => {
     filterGraph,
     handleChangeGraphFilter,
   } = useTrendsName()
+  const checkBoxRefFemale = useRef<HTMLButtonElement>(null)
+  const checkBoxRefMale = useRef<HTMLButtonElement>(null)
+  const checkBoxRefGroups = useRef<HTMLButtonElement>(null)
 
   return (
     <SectionLayout
@@ -52,22 +57,25 @@ const TrendsByNameComponent = () => {
           />
           <Stack direction="row" alignItems="center" justifyContent="center" my={2}>
             <Tooltip title="Naissances chez les femmes" arrow>
-              <ChecboxFemale
+              <CheckboxFemale
                 checked={filterGraph.female}
                 onChange={handleChangeGraphFilter}
+                ref={checkBoxRefFemale}
               />
             </Tooltip>
             <Tooltip title="Naissances chez les hommes" arrow>
-              <ChecboxMale
+              <CheckboxMale
                 checked={filterGraph.male}
                 onChange={handleChangeGraphFilter}
+                ref={checkBoxRefMale}
               />
             </Tooltip>
             <Tooltip title="Total des naissances" arrow>
-              <ChecboxGroups
+              <CheckboxGroups
                 checked={filterGraph.groups}
                 onChange={handleChangeGraphFilter}
                 name="total"
+                ref={checkBoxRefGroups}
               />
             </Tooltip>
           </Stack>
