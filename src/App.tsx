@@ -1,16 +1,29 @@
 import { Suspense, useEffect, useState } from "react"
 
-import { Box, Button, FormControl, TextField, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 
 import TotalComponent from "./components/TotalComponent/TotalComponent"
 import TrendsByNameComponent from "./components/TrendsComponent/TrendsByNameComponent/TrendsByNameComponent"
 import TrendsLengthNameComponent from "./components/TrendsComponent/TrendsLengthNameComponent/TrendsLengthNameComponent"
 import TrendsTopNamesComponent from "./components/TrendsComponent/TrendsTopNamesComponent/TrendsTopNamesComponent"
 import Hero from "./components/hero/Hero"
+import { getTotalBySex } from "@src/services/api/names.services"
+import { useQuery } from "@tanstack/react-query"
+import Plot from "react-plotly.js"
+import LoginForm from "./components/LoginForm"
+import NavBar from "./components/NavBar"
+import { getCookie } from "./services/cookies/cookiesHandler.service"
+
+interface IObjAcc {
+  x: string[]
+  yM: number[]
+  yF: number[]
+}
 
 function App() {
-  const [username, setUsername] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
+
+  const [isAuth, setIsAuth] = useState<boolean>(false)
+  const token = getCookie("token")
 
   const { data: names } = useQuery({
     queryKey: ["names"],
@@ -33,47 +46,11 @@ function App() {
     setData(data)
   }, [names]);
 
-  const authLogin = async (username: string, password: string) => { 
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('password', password);
-    
-    try {
-      const response = await fetch("http://localhost:8000/auth/token", {
-        method: "POST",
-        body: formData,
-      })
-      const data = await response.json()
-      localStorage.setItem("token", data.access_token)
-    } catch (error) {
-      console.error("🆘", error)
-    }
+  if (!isAuth && !token && token === undefined) {
+    return <LoginForm isAuth={isAuth} setIsAuth={setIsAuth} />
   }
-  const authLogout = () => {
-    localStorage.removeItem("token")
-  }
-
-  if (localStorage.getItem("token") === undefined || localStorage.getItem("token") === null) {
-    return (
-      <>
-    {localStorage.getItem("token") ? <button onClick={() => authLogout()}>Logout</button> : (
-      <FormControl required>
-        <TextField id="username" onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-        <TextField id="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-        <Button
-        type="submit"
-        onClick={() => authLogin(username, password)}
-        >
-          Submit
-        </Button>
-      </FormControl>
-      
-    )}
-    </>
-    )
-  }
+  
   return (
-    
     <Box>
       <Hero />
       <TotalComponent />
@@ -81,7 +58,7 @@ function App() {
       <TrendsTopNamesComponent />
       <TrendsLengthNameComponent />
     </Box>
-    )
+  )
 }
 
 export default App
