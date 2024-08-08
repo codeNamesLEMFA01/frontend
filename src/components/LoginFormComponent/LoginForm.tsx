@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, TextField } from "@mui/material";
 import authLogin from "@src/services/auth/authLogin.service";
 import { useEffect, useState } from "react";
-import { IAuth } from "../interfaces/IAuth";
+import { IAuth } from "../../interfaces/IAuth";
 
 const LoginForm = ({isAuth, setIsAuth}: IAuth) => {
     const [username, setUsername] = useState<string>("")
