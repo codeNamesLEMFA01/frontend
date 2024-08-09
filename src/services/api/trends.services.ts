@@ -1,6 +1,7 @@
 import {
   IServiceTrendsName,
   IServiceTrendsTopNames,
+  ITrendsLengthNameService,
   TrendsTopNamesQueryEnum,
 } from "../types/trends.type"
 
@@ -26,5 +27,11 @@ export const getTrendsTopNames = async ({
     `${NAMES_URL}/trends_name/top/?start_year=${startYear}&end_year=${endYear}&top_n=${topN}`,
   )
   const data = await response.json()
+  return data
+}
+
+export const getLengthNames = async (): Promise<ITrendsLengthNameService> => {
+  const response = await fetch(`${NAMES_URL}/trends_name/length_name/`)
+  const data = response.json()
   return data
 }
