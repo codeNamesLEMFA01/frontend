@@ -14,14 +14,21 @@ export const TypoName = (props: TypographyProps) => (
 type NumberProps = {
   number: number | string
   isCurrency?: boolean
+  isPercent?: boolean
 } & TypographyProps
 
-export const TypoNumber = ({ number, isCurrency, ...props }: NumberProps) => {
+export const TypoNumber = ({
+  number,
+  isCurrency,
+  isPercent,
+  ...props
+}: NumberProps) => {
   const options = !isCurrency ? {} : { style: "currency", currency: "EUR" }
   const num = new Intl.NumberFormat("fr-FR", options).format(+number)
   return (
     <Typography component="span" {...props}>
-      {num}{" "}
+      {num}
+      {isPercent && "%"}{" "}
     </Typography>
   )
 }

@@ -43,3 +43,49 @@ export enum TrendsTopNamesQueryEnum {
   ENDYEAR = "endYear",
   TOPN = "topN",
 }
+
+export interface ILengthData {
+  years: number[]
+  length: number[]
+}
+export interface IMaxLengthData {
+  name: string
+  sex: string
+  birth: number
+  year: number
+  name_length: number
+}
+
+export interface IDescribeLengthData {
+  count: number
+  mean: number
+  std: number
+  min: number
+  "25%": number
+  "50%": number
+  "75%": number
+  max: number
+}
+
+export interface ITrendsLengthNameService {
+  data: {
+    male: ILengthData
+    female: ILengthData
+    global: ILengthData
+  }
+  meta: {
+    max: {
+      male: IMaxLengthData
+      female: IMaxLengthData
+    }
+    evolution: {
+      male: number
+      female: number
+      global: number
+    }
+    describe: {
+      male: IDescribeLengthData
+      female: IDescribeLengthData
+    }
+  }
+}
