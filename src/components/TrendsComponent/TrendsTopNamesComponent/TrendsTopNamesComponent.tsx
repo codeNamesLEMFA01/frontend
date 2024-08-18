@@ -1,19 +1,11 @@
-import {
-  Box,
-  Divider,
-  FormControlLabel,
-  Slider,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material"
+import { Box, Divider, Slider, TextField, Typography } from "@mui/material"
 
 import {
   IServiceTrendsTopNames,
   TrendsTopNamesQueryEnum,
 } from "@src/services/types/trends.type"
 
-import { CheckboxFemale, CheckboxMale } from "@src/components/common/Checkboxes"
+import { GroupFormControlLabelCheckboxesMaleAndFemale } from "@src/components/common/Checkboxes"
 import { TypoName, TypoNumber } from "@src/components/common/Typo"
 import ResponsivePlot from "@src/components/graphs/ResponsivePlot"
 import SectionLayout from "@src/components/layout/SectionLayout"
@@ -21,14 +13,6 @@ import SectionLayout from "@src/components/layout/SectionLayout"
 import useTrendsTopNames from "./hooks/useTrendsTopNames"
 
 const MIN_TOP = 2
-function SxFormControlLabel(isFemale: boolean, type: "female" | "male") {
-  return {
-    ".MuiFormControlLabel-label": {
-      color: isFemale ? `${type}.main` : "",
-    },
-    "&:hover, &:hover>.MuiButtonBase-root": { color: `${type}.main` },
-  }
-}
 
 const TrendsTopNamesComponent = () => {
   const {
@@ -63,28 +47,10 @@ const TrendsTopNamesComponent = () => {
               onChange={(e) => handleChangeInputQueryParams(e)}
               inputProps={{ min: MIN_TOP }}
             />
-            <Stack direction="row" justifyContent="center" mb={2}>
-              <FormControlLabel
-                label="Femmes"
-                sx={SxFormControlLabel(isFemale, "female")}
-                control={
-                  <CheckboxFemale
-                    checked={isFemale}
-                    onChange={() => setIsFemale(!isFemale)}
-                  />
-                }
-              />
-              <FormControlLabel
-                label="Hommes"
-                sx={SxFormControlLabel(!isFemale, "male")}
-                control={
-                  <CheckboxMale
-                    checked={!isFemale}
-                    onChange={() => setIsFemale(!isFemale)}
-                  />
-                }
-              />
-            </Stack>
+            <GroupFormControlLabelCheckboxesMaleAndFemale
+              checked={isFemale}
+              onChange={() => setIsFemale(!isFemale)}
+            />
             {trendsTopNames && <InfoComponent info={trendsTopNames.info} />}
           </Box>
         }

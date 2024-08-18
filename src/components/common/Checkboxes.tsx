@@ -1,6 +1,6 @@
 import { ChangeEvent, forwardRef } from "react"
 
-import { Checkbox, CheckboxProps } from "@mui/material"
+import { Checkbox, CheckboxProps, FormControlLabel, Stack } from "@mui/material"
 
 import FemaleIcon from "@mui/icons-material/Female"
 import Groups2Icon from "@mui/icons-material/Groups2"
@@ -98,3 +98,60 @@ export const CheckboxGroups = forwardRef<HTMLButtonElement, ICheckboxes>(
     )
   },
 )
+
+export function SxFormControlLabel(isFemale: boolean, type: "female" | "male") {
+  return {
+    ".MuiFormControlLabel-label": {
+      color: isFemale ? `${type}.main` : "",
+      fontWeight: 300,
+    },
+    "&:hover, &:hover>.MuiButtonBase-root": {
+      color: `${type}.main`,
+      transform: "scale(0.95)",
+      transition: "all 0.2s ease-in-out",
+    },
+  }
+}
+
+export const GroupFormControlLabelCheckboxesMaleAndFemale = ({
+  checked,
+  onChange,
+  ...props
+}: ICheckboxes) => {
+  const { disabled, ...other } = props
+  const handleChange = disabled ? () => {} : onChange
+  const SxLabel = (check: boolean, type: "female" | "male") => {
+    return disabled
+      ? { ".MuiFormControlLabel-label": { fontWeight: 300 } }
+      : SxFormControlLabel(check, type)
+  }
+
+  return (
+    <Stack direction="row" justifyContent="center" mb={2}>
+      <FormControlLabel
+        label="Femmes"
+        sx={SxLabel(checked, "female")}
+        control={
+          <CheckboxFemale
+            checked={disabled ? false : checked}
+            onChange={handleChange}
+            sx={{}}
+            {...other}
+          />
+        }
+      />
+      <FormControlLabel
+        label="Hommes"
+        sx={SxLabel(!checked, "male")}
+        control={
+          <CheckboxMale
+            checked={disabled ? false : !checked}
+            onChange={handleChange}
+            sx={{}}
+            {...other}
+          />
+        }
+      />
+    </Stack>
+  )
+}
