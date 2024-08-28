@@ -44,7 +44,7 @@ const TrendsByNameComponent = () => {
   return (
     <SectionLayout
       title="Évolution"
-      titleIcon={<TrendingUpIcon sx={{ fontSize: "inherit", color: "goldenrod" }} />}
+      titleIcon={<TrendingUpIcon sx={{ fontSize: "inherit", color: "green" }} />}
       description="Dynamiques culturelles et sociales qui influencent le choix des prénoms."
       subtitle="Évolution des tendances par nom"
       subDescription="Évolution de la distribution des naissances par genre et par années"

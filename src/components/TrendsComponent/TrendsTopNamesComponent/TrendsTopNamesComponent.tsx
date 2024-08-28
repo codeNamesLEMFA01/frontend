@@ -1,5 +1,6 @@
 import { Box, Divider, Slider, TextField, Typography } from "@mui/material"
 
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents"
 import {
   IServiceTrendsTopNames,
   TrendsTopNamesQueryEnum,
@@ -31,7 +32,12 @@ const TrendsTopNamesComponent = () => {
     <>
       <Divider />
       <SectionLayout
+        title="Sur le podium"
+        titleIcon={
+          <EmojiEventsIcon sx={{ fontSize: "inherit", color: "goldenrod" }} />
+        }
         subtitle="Top noms"
+        bglight
         subDescription="Évolution des noms les plus répandus au cours des annés"
         data={trendsTopNames}
         componentLeft={
