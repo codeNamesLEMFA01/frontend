@@ -23,7 +23,9 @@ export const TypoNumber = ({
   isPercent,
   ...props
 }: NumberProps) => {
-  const options = !isCurrency ? {} : { style: "currency", currency: "EUR" }
+  const options: Intl.NumberFormatOptions = !isCurrency
+    ? {}
+    : { style: "currency", currency: "EUR" }
   const num = new Intl.NumberFormat("fr-FR", options).format(+number)
   return (
     <Typography component="span" {...props}>
