@@ -39,7 +39,7 @@ const SectionLayout = <T,>({
               variant="h2"
               fontSize={{ xs: 28, md: 32 }}
               fontWeight={700}
-              sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}
+              sx={{ display: "flex", alignItems: "center", gap: 1 }}
             >
               {titleIcon}
               {title}
