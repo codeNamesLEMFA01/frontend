@@ -42,7 +42,7 @@ const useTrendsName = () => {
     retry: false,
     staleTime: Infinity,
   })
-  const { data: trends, refetch } = useQuery({
+  const { data: trends } = useQuery({
     queryKey: ["trend_name", selectedName],
     queryFn: async () => await getEvolutionName(selectedName),
     retry: false,
@@ -63,10 +63,14 @@ const useTrendsName = () => {
       showLabelError()
       return
     }
-
+    if (!namesList || !namesList.length || !namesList.includes(value)) {
+      console.log("🆘 IF = NAMES LIST IN CHANGE NAME ", namesList, " ", value)
+      return
+    }
     if (isLabelError) clearLabelError()
     setSelectedName(value)
-    refetch()
+    console.log("🆘 OUT = NAMES LIST IN CHANGE NAME ", namesList, " ", value)
+    // refetch()
   }
 
   const handleUpdateNamesList = useDebouncedCallback(
@@ -93,14 +97,16 @@ const useTrendsName = () => {
   }
 
   useEffect(() => {
+    // The first time we set the first name in the list
     if (!namesList) return
     if (selectedName) return
-    setSelectedName(namesList[Math.floor(Math.random() * namesList.length)])
+    setSelectedName(namesList[0])
   }, [namesList, selectedName])
 
   useEffect(() => {
     if (isLabelError) return
-    if (!trends || isError) {
+    if (isError) return
+    if (!trends) {
       setData(undefined)
       return
     }
