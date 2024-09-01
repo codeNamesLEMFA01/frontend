@@ -39,8 +39,6 @@ export interface IServiceTrendsTopNames {
 }
 
 export enum TrendsTopNamesQueryEnum {
-  STARTYEAR = "startYear",
-  ENDYEAR = "endYear",
   TOPN = "topN",
 }
 

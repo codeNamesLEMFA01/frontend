@@ -1,4 +1,4 @@
-import { Box, Divider, Slider, TextField, Typography } from "@mui/material"
+import { Box, Divider, TextField, Typography } from "@mui/material"
 
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents"
 import {
@@ -7,13 +7,12 @@ import {
 } from "@src/services/types/trends.type"
 
 import { GroupFormControlLabelCheckboxesMaleAndFemale } from "@src/components/common/Checkboxes"
+import SliderDateRange from "@src/components/common/SliderDateRange/SliderDateRange"
 import { TypoName, TypoNumber } from "@src/components/common/Typo"
 import ResponsivePlot from "@src/components/graphs/ResponsivePlot"
 import SectionLayout from "@src/components/layout/SectionLayout"
 
 import useTrendsTopNames from "./hooks/useTrendsTopNames"
-
-const MIN_TOP = 2
 
 const TrendsTopNamesComponent = () => {
   const {
@@ -26,8 +25,12 @@ const TrendsTopNamesComponent = () => {
     START_DATE,
     END_DATE,
     DATE_RANGE,
+    dateQueryParams,
+    MIN_TOP,
+    MAX_TOP,
+    isError,
+    isFetching,
   } = useTrendsTopNames()
-
   return (
     <>
       <Divider />
@@ -40,6 +43,8 @@ const TrendsTopNamesComponent = () => {
         bglight
         subDescription="Évolution des noms les plus répandus au cours des annés"
         data={trendsTopNames}
+        isError={isError}
+        isFetching={isFetching}
         componentLeft={
           <Box>
             <TextField
@@ -51,8 +56,12 @@ const TrendsTopNamesComponent = () => {
               fullWidth
               value={inputQueryParams.topN}
               onChange={(e) => handleChangeInputQueryParams(e)}
-              inputProps={{ min: MIN_TOP }}
+              inputProps={{ min: MIN_TOP, max: MAX_TOP }}
             />
+            <Typography variant="caption" pl={1} mb={4} color="gray">
+              min: {MIN_TOP}, max: {MAX_TOP}
+            </Typography>
+
             <GroupFormControlLabelCheckboxesMaleAndFemale
               checked={isFemale}
               onChange={() => setIsFemale(!isFemale)}
@@ -79,22 +88,15 @@ const TrendsTopNamesComponent = () => {
                 title: `Top ${trendsTopNames.info.top_n} des noms les plus répendus pour ${isFemale ? "femmes" : "hommes"}`,
               }}
             />
-            <Box pb={6} px={6}>
-              <Slider
-                marks={DATE_RANGE}
-                min={START_DATE}
-                max={END_DATE}
-                getAriaLabel={() => "Minimum distance shift"}
-                value={[inputQueryParams.startYear, inputQueryParams.endYear]}
-                onChange={handleChangeDateRange}
-                valueLabelDisplay="auto"
-                getAriaValueText={() => `toto`}
-                sx={{ color: isFemale ? "female.main" : "male.main" }}
-              />
-              <Typography variant="body2" textAlign="center">
-                Choix de la période à consulter
-              </Typography>
-            </Box>
+            <SliderDateRange
+              dateRange={DATE_RANGE}
+              startDate={START_DATE}
+              endDate={END_DATE}
+              handleChangeDateRange={handleChangeDateRange}
+              sliderSx={{ color: isFemale ? "female.main" : "male.main" }}
+              value={[dateQueryParams.startYear, dateQueryParams.endYear]}
+              message="⚠️ Une période trop grande peut entrainer un temps d’attente important"
+            />
           </Box>
         )}
       </SectionLayout>

@@ -1,3 +1,5 @@
+import { DateQueryEnum } from "@src/types/common"
+
 import {
   IServiceTrendsName,
   IServiceTrendsTopNames,
@@ -25,8 +27,8 @@ export const getTrendsTopNames = async ({
   endYear,
   topN = "10",
 }: {
-  [TrendsTopNamesQueryEnum.STARTYEAR]: number
-  [TrendsTopNamesQueryEnum.ENDYEAR]: number
+  [DateQueryEnum.STARTYEAR]: number
+  [DateQueryEnum.ENDYEAR]: number
   [TrendsTopNamesQueryEnum.TOPN]?: string
 }): Promise<IServiceTrendsTopNames> => {
   const response = await fetch(
