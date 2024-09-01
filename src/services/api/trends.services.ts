@@ -12,10 +12,11 @@ export const getEvolutionName = async (
   name: string | undefined,
 ): Promise<IServiceTrendsName> => {
   const response = await fetch(`${NAMES_URL}/evolution_name/${name}`)
+  if (!response.ok)
+    throw new Error(
+      `🆘 status => ${response.status}, statusText: ${response.statusText}`,
+    )
   const data = await response.json()
-  if (data.detail) {
-    throw new Error(data.detail)
-  }
   return data
 }
 
@@ -31,18 +32,20 @@ export const getTrendsTopNames = async ({
   const response = await fetch(
     `${NAMES_URL}/trends_name/top/?start_year=${startYear}&end_year=${endYear}&top_n=${topN}`,
   )
+  if (!response.ok)
+    throw new Error(
+      `🆘 status => ${response.status}, statusText: ${response.statusText}`,
+    )
   const data = await response.json()
-  if (data.detail) {
-    throw new Error(data.detail)
-  }
   return data
 }
 
 export const getLengthNames = async (): Promise<ITrendsLengthNameService> => {
   const response = await fetch(`${NAMES_URL}/trends_name/length_name/`)
+  if (!response.ok)
+    throw new Error(
+      `🆘 status => ${response.status}, statusText: ${response.statusText}`,
+    )
   const data = await response.json()
-  if (data.detail) {
-    throw new Error(data.detail)
-  }
   return data
 }
