@@ -1,8 +1,18 @@
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, useEffect, useState } from "react"
 
-import { Box, Grid, Skeleton, Stack, Typography } from "@mui/material"
+import {
+  Alert,
+  Box,
+  Grid,
+  Skeleton,
+  Snackbar,
+  Stack,
+  Typography,
+} from "@mui/material"
 
-interface ISectionLayout<T> {
+import { useDebouncedCallback } from "use-debounce"
+
+interface ISectionLayout<T> extends IState {
   title?: string
   titleIcon?: JSX.Element
   subtitle?: string
@@ -12,6 +22,15 @@ interface ISectionLayout<T> {
   bglight?: boolean
   data: T
   componentLeft: JSX.Element
+}
+
+interface IState {
+  stateSnackbar?: {
+    isFetching: boolean
+    isError: boolean
+    errorMessage?: string
+    isFetched: boolean
+  }
 }
 
 const HEIGHT = 350
@@ -26,11 +45,28 @@ const SectionLayout = <T,>({
   componentLeft,
   data,
   children,
+  stateSnackbar,
 }: PropsWithChildren<ISectionLayout<T>>) => {
+  const [stateError, setStateError] = useState(false)
+  const [stateFetching, setStateFetching] = useState(false)
   const bgcolor = bglight ? "section.light" : "section.dark"
 
+  const test = useDebouncedCallback(() => {
+    if (stateSnackbar?.isFetching) setStateFetching(stateSnackbar.isFetching)
+  }, 300)
+
+  useEffect(() => {
+    if (!stateSnackbar?.isFetching) setStateFetching(false)
+    if (
+      stateSnackbar?.isError &&
+      (stateSnackbar.isFetched || stateSnackbar.isFetching)
+    )
+      setStateError(() => true)
+    test()
+  }, [stateSnackbar, test])
+
   return (
-    <Stack bgcolor={bgcolor} p={4}>
+    <Stack bgcolor={bgcolor} p={4} sx={{ position: "relative" }}>
       <Box mb={1}>
         <Grid container mb={3}>
           <Grid item xs={0} md={2} />
@@ -39,7 +75,7 @@ const SectionLayout = <T,>({
               variant="h2"
               fontSize={{ xs: 28, md: 32 }}
               fontWeight={700}
-              sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}
+              sx={{ display: "flex", alignItems: "center", gap: 1 }}
             >
               {titleIcon}
               {title}
@@ -68,6 +104,36 @@ const SectionLayout = <T,>({
           {data && children ? children : <LoadingSkeleton />}
         </Grid>
       </Grid>
+      <Snackbar
+        open={stateFetching}
+        // autoHideDuration={2000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        sx={{ position: "absolute" }}
+        // onClose={() => setStateFetching(false)}
+      >
+        {stateFetching ? (
+          <Alert severity="info" variant="filled">
+            Chargement en cours...
+          </Alert>
+        ) : (
+          <Box />
+        )}
+      </Snackbar>
+      <Snackbar
+        open={stateError}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        sx={{ position: "absolute" }}
+        onClose={() => setStateError(false)}
+      >
+        {stateSnackbar?.isError ? (
+          <Alert severity="error" variant="filled">
+            {stateSnackbar.errorMessage || "Une erreur s'est produite..."}
+          </Alert>
+        ) : (
+          <Box />
+        )}
+      </Snackbar>
     </Stack>
   )
 }

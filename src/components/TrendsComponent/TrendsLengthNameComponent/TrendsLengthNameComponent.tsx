@@ -1,5 +1,6 @@
 import { Box, FormControlLabel, FormGroup, Switch } from "@mui/material"
 
+import { AccessTime } from "@mui/icons-material"
 import { customPalette } from "@src/theme/const/customPalette"
 
 import { GroupFormControlLabelCheckboxesMaleAndFemale } from "@src/components/common/Checkboxes"
@@ -21,7 +22,8 @@ const TrendsLengthNameComponent = () => {
 
   return (
     <SectionLayout
-      bglight
+      title="Dans le temps"
+      titleIcon={<AccessTime color="info" />}
       subtitle="Longeur des noms"
       subDescription="Analyse de la longueur des noms au travers des annés"
       data={trendsLengthName}

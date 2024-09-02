@@ -23,14 +23,20 @@ import ResponsivePlot from "../../graphs/ResponsivePlot"
 import SectionLayout from "../../layout/SectionLayout"
 import useTrendsName from "./hooks/useTrendsName"
 
+const MESSAGE_ERROR = "Le nom ne peut contenir que des lettres."
+
 const TrendsByNameComponent = () => {
   const {
-    NAMES,
+    namesList,
     data,
     selectedName,
     handleChangeName,
     filterGraph,
     handleChangeGraphFilter,
+    handleUpdateNamesList,
+    isLabelError,
+    LabelErrorComponent,
+    stateRequest,
   } = useTrendsName()
   const checkBoxRefFemale = useRef<HTMLButtonElement>(null)
   const checkBoxRefMale = useRef<HTMLButtonElement>(null)
@@ -38,23 +44,41 @@ const TrendsByNameComponent = () => {
 
   return (
     <SectionLayout
-      title="Tendances"
-      titleIcon={<TrendingUpIcon sx={{ fontSize: "inherit", color: "goldenrod" }} />}
+      title="Évolution"
+      titleIcon={<TrendingUpIcon sx={{ fontSize: "inherit", color: "green" }} />}
       description="Dynamiques culturelles et sociales qui influencent le choix des prénoms."
       subtitle="Évolution des tendances par nom"
       subDescription="Évolution de la distribution des naissances par genre et par années"
       data={data}
+      stateSnackbar={{
+        ...stateRequest,
+        errorMessage: `Aucun nom correspond à votre recherche `,
+      }}
       componentLeft={
         <Box>
-          <Autocomplete
-            value={selectedName}
-            options={NAMES}
-            autoHighlight
-            onChange={(_, newValue) => handleChangeName(newValue)}
-            renderInput={(params) => (
-              <TextField {...params} sx={{ bgcolor: "common.white" }} />
-            )}
-          />
+          {namesList && selectedName && (
+            <Autocomplete
+              value={selectedName}
+              options={namesList}
+              autoHighlight
+              freeSolo
+              onChange={(_, newValue) => handleChangeName(newValue)}
+              renderInput={(params) => (
+                <>
+                  <TextField
+                    {...params}
+                    sx={{ bgcolor: "common.white" }}
+                    InputProps={{
+                      ...params.InputProps,
+                      onKeyUp: (e) => handleUpdateNamesList(e),
+                    }}
+                    error={isLabelError}
+                  />
+                  <LabelErrorComponent message={MESSAGE_ERROR} color={""} />
+                </>
+              )}
+            />
+          )}
           <Stack direction="row" alignItems="center" justifyContent="center" my={2}>
             <Tooltip title="Naissances chez les femmes" arrow>
               <CheckboxFemale
@@ -79,7 +103,7 @@ const TrendsByNameComponent = () => {
               />
             </Tooltip>
           </Stack>
-          {data && (
+          {data ? (
             <Stack spacing={1}>
               <Typography>
                 L'utilisation du prénom{" "}
@@ -112,6 +136,10 @@ const TrendsByNameComponent = () => {
                 filles sont nés durant cette période.
               </Typography>
             </Stack>
+          ) : (
+            <Typography align="center">
+              Pas de données {selectedName ? `pour ${selectedName}` : ""}
+            </Typography>
           )}
         </Box>
       }
