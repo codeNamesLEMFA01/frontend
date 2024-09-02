@@ -36,8 +36,7 @@ const DiversityComponent = () => {
     filterGraph,
     DATE_RANGE,
     dateQueryParams,
-    isError,
-    isFetching,
+    stateRequest,
   } = useDiversity()
 
   const checkBoxRefFemale = useRef<HTMLButtonElement>(null)
@@ -51,8 +50,7 @@ const DiversityComponent = () => {
       subtitle="Mesure de la diversité des prénoms"
       subDescription="Évaluation de la diversité des prénoms au fil du temps."
       data={data}
-      isError={isError}
-      isFetching={isFetching}
+      stateSnackbar={stateRequest}
       componentLeft={
         <Box>
           <FormControl fullWidth>

@@ -28,8 +28,7 @@ const TrendsTopNamesComponent = () => {
     dateQueryParams,
     MIN_TOP,
     MAX_TOP,
-    isError,
-    isFetching,
+    stateRequest,
   } = useTrendsTopNames()
   return (
     <>
@@ -43,8 +42,7 @@ const TrendsTopNamesComponent = () => {
         bglight
         subDescription="Évolution des noms les plus répandus au cours des annés"
         data={trendsTopNames}
-        isError={isError}
-        isFetching={isFetching}
+        stateSnackbar={stateRequest}
         componentLeft={
           <Box>
             <TextField

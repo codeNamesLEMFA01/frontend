@@ -30,7 +30,9 @@ const useTrendsName = () => {
   const {
     data: namesList,
     refetch: refetchNamesList,
-    isError,
+    isFetching: isFetchingNamesList,
+    isError: isErrorNamesList,
+    isFetched: isFetchedNamesList,
   } = useQuery({
     queryKey: ["names_list", selectedName],
     queryFn: async () =>
@@ -42,7 +44,12 @@ const useTrendsName = () => {
     retry: false,
     staleTime: Infinity,
   })
-  const { data: trends } = useQuery({
+  const {
+    data: trends,
+    isFetching: isFetchingTrend,
+    isError: isErrorTrend,
+    isFetched: isFetchedTrend,
+  } = useQuery({
     queryKey: ["trend_name", selectedName],
     queryFn: async () => await getEvolutionName(selectedName),
     retry: false,
@@ -105,7 +112,7 @@ const useTrendsName = () => {
 
   useEffect(() => {
     if (isLabelError) return
-    if (isError) return
+    if (isErrorNamesList) return
     if (!trends) {
       setData(undefined)
       return
@@ -127,7 +134,8 @@ const useTrendsName = () => {
       graphData,
       ...trendsClone,
     }))
-  }, [data, trends, isLabelError, isError])
+  }, [data, trends, isLabelError, isErrorNamesList])
+
   return {
     data,
     namesList,
@@ -139,6 +147,11 @@ const useTrendsName = () => {
     setSelectedName,
     isLabelError,
     LabelErrorComponent,
+    stateRequest: {
+      isFetching: isFetchingTrend || isFetchingNamesList,
+      isError: isErrorTrend || isErrorNamesList,
+      isFetched: isFetchedTrend || isFetchedNamesList,
+    },
   }
 }
 

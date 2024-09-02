@@ -34,6 +34,7 @@ const useTrendsTopNames = () => {
     refetch,
     isError,
     isFetching,
+    isFetched,
   } = useQuery({
     queryKey: ["trends_top_names"],
     queryFn: async () =>
@@ -92,8 +93,11 @@ const useTrendsTopNames = () => {
     dateQueryParams,
     MIN_TOP,
     MAX_TOP,
-    isFetching,
-    isError,
+    stateRequest: {
+      isFetching,
+      isError,
+      isFetched,
+    },
   }
 }
 

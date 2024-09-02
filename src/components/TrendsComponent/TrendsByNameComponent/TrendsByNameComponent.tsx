@@ -36,6 +36,7 @@ const TrendsByNameComponent = () => {
     handleUpdateNamesList,
     isLabelError,
     LabelErrorComponent,
+    stateRequest,
   } = useTrendsName()
   const checkBoxRefFemale = useRef<HTMLButtonElement>(null)
   const checkBoxRefMale = useRef<HTMLButtonElement>(null)
@@ -49,6 +50,10 @@ const TrendsByNameComponent = () => {
       subtitle="Évolution des tendances par nom"
       subDescription="Évolution de la distribution des naissances par genre et par années"
       data={data}
+      stateSnackbar={{
+        ...stateRequest,
+        errorMessage: `Aucun nom correspond à votre recherche `,
+      }}
       componentLeft={
         <Box>
           {namesList && selectedName && (

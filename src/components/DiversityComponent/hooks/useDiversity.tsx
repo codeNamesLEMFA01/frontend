@@ -44,6 +44,7 @@ const useDiversity = () => {
     refetch,
     isError,
     isFetching,
+    isFetched,
   } = useQuery({
     queryKey: ["diversity"],
     queryFn: async () => await getDiversity(dateQueryParams),
@@ -92,8 +93,11 @@ const useDiversity = () => {
     handleChangeGraphFilter,
     DATE_RANGE,
     dateQueryParams,
-    isError,
-    isFetching,
+    stateRequest: {
+      isError,
+      isFetching,
+      isFetched,
+    },
   }
 }
 
