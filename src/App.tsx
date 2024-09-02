@@ -2,6 +2,7 @@ import { Box } from "@mui/material"
 
 import DiversityComponent from "@components/DiversityComponent/DiversityComponent.tsx"
 
+import Navbar from "./components/Navbar/Navbar"
 import TotalComponent from "./components/TotalComponent/TotalComponent"
 import TrendsByNameComponent from "./components/TrendsComponent/TrendsByNameComponent/TrendsByNameComponent"
 import TrendsLengthNameComponent from "./components/TrendsComponent/TrendsLengthNameComponent/TrendsLengthNameComponent"
@@ -13,6 +14,7 @@ function App() {
   return (
     <AuthHOC>
       <Box>
+        <Navbar />
         <Hero />
         <TotalComponent />
         <TrendsByNameComponent />
