@@ -8,3 +8,10 @@ export const theme = createTheme({
     ...customPalette,
   },
 })
+
+export const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+    ...customPalette,
+  },
+})
