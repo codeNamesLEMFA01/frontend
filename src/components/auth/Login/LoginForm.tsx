@@ -7,11 +7,13 @@ import {
   CardContent,
   CardHeader,
   Collapse,
+  InputAdornment,
   Stack,
   TextField,
 } from "@mui/material"
 
 import bg from "@assets/bb_amer-flag.webp"
+import { AlternateEmail, Password } from "@mui/icons-material"
 
 import DarkCard from "@src/components/common/DarkCard/DarkCard"
 
@@ -100,10 +102,20 @@ const LoginForm = ({ isLogged }: { isLogged: IsLogginForm }) => {
                   name={EnumFields.EMAIL}
                   label="Email"
                   type="email"
+                  id="email"
                   value={credentials.email}
                   error={errorField.email.isError}
                   helperText={errorField.email.message}
                   onChange={handleChangeCredentialsFields}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AlternateEmail
+                          color={errorField.email.isError ? "error" : "primary"}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
 
                 <TextField
@@ -115,6 +127,15 @@ const LoginForm = ({ isLogged }: { isLogged: IsLogginForm }) => {
                   error={errorField.password.isError}
                   helperText={errorField.password.message}
                   onChange={handleChangeCredentialsFields}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Password
+                          color={errorField.password.isError ? "error" : "primary"}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
                 <Collapse in={!isLogginForm}>
                   <TextField
@@ -127,6 +148,19 @@ const LoginForm = ({ isLogged }: { isLogged: IsLogginForm }) => {
                     helperText={errorField.confirmPassword.message}
                     onChange={handleChangeCredentialsFields}
                     fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Password
+                            color={
+                              errorField.confirmPassword.isError
+                                ? "error"
+                                : "primary"
+                            }
+                          />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Collapse>
               </Stack>
