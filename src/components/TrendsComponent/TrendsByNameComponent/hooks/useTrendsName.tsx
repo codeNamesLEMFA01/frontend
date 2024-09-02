@@ -54,7 +54,7 @@ const useTrendsName = () => {
     queryFn: async () => await getEvolutionName(selectedName),
     retry: false,
     staleTime: Infinity,
-    enabled: !!selectedName && queryName.current !== selectedName,
+    enabled: !!selectedName,
   })
 
   const [data, setData] = useState<IData>()
@@ -70,14 +70,9 @@ const useTrendsName = () => {
       showLabelError()
       return
     }
-    if (!namesList || !namesList.length || !namesList.includes(value)) {
-      console.log("🆘 IF = NAMES LIST IN CHANGE NAME ", namesList, " ", value)
-      return
-    }
+    if (!namesList || !namesList.length || !namesList.includes(value)) return
     if (isLabelError) clearLabelError()
-    setSelectedName(value)
-    console.log("🆘 OUT = NAMES LIST IN CHANGE NAME ", namesList, " ", value)
-    // refetch()
+    setSelectedName(() => value)
   }
 
   const handleUpdateNamesList = useDebouncedCallback(
