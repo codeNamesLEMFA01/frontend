@@ -13,6 +13,7 @@ import {
 import { useDebouncedCallback } from "use-debounce"
 
 interface ISectionLayout<T> extends IState {
+  id?: string
   title?: string
   titleIcon?: JSX.Element
   subtitle?: string
@@ -35,6 +36,7 @@ interface IState {
 
 const HEIGHT = 350
 const SectionLayout = <T,>({
+  id,
   bglight,
   title,
   titleIcon,
@@ -66,7 +68,12 @@ const SectionLayout = <T,>({
   }, [stateSnackbar, test])
 
   return (
-    <Stack bgcolor={bgcolor} p={4} sx={{ position: "relative" }}>
+    <Stack
+      bgcolor={bgcolor}
+      p={4}
+      sx={{ position: "relative", scrollBehavior: "smooth" }}
+      id={"anchor_" + id}
+    >
       <Box mb={1}>
         <Grid container mb={3}>
           <Grid item xs={0} md={2} />

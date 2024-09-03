@@ -13,7 +13,7 @@ import Hero from "./components/hero/Hero"
 function App() {
   return (
     <AuthHOC>
-      <Box>
+      <Box id="anchor_top">
         <Navbar />
         <Hero />
         <TotalComponent />

@@ -6,6 +6,7 @@ import logo from "@assets/logo.png"
 const Hero = () => {
   return (
     <Stack
+      id="hero"
       width={"100vw"}
       sx={{
         aspectRatio: "7/ 3",

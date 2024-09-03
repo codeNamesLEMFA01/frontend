@@ -10,6 +10,8 @@ import {
 import CakeIcon from "@mui/icons-material/Cake"
 import { customPalette } from "@src/theme/const/customPalette"
 
+import { AnchorEnum } from "@src/types/common"
+
 import { TypoNumber } from "../common/Typo"
 import ResponsivePlot from "../graphs/ResponsivePlot"
 import SectionLayout from "../layout/SectionLayout"
@@ -21,6 +23,7 @@ const TotalComponent = () => {
 
   return (
     <SectionLayout
+      id={AnchorEnum.SECT_TOTAL}
       bglight
       title="Totalite des naissances"
       titleIcon={

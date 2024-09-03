@@ -12,6 +12,8 @@ import { TypoName, TypoNumber } from "@src/components/common/Typo"
 import ResponsivePlot from "@src/components/graphs/ResponsivePlot"
 import SectionLayout from "@src/components/layout/SectionLayout"
 
+import { AnchorEnum } from "@src/types/common"
+
 import useTrendsTopNames from "./hooks/useTrendsTopNames"
 
 const TrendsTopNamesComponent = () => {
@@ -34,6 +36,7 @@ const TrendsTopNamesComponent = () => {
     <>
       <Divider />
       <SectionLayout
+        id={AnchorEnum.SECT_PODIUM}
         title="Sur le podium"
         titleIcon={
           <EmojiEventsIcon sx={{ fontSize: "inherit", color: "goldenrod" }} />
