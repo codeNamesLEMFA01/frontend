@@ -2,7 +2,6 @@ import { MouseEvent, useEffect, useRef, useState } from "react"
 
 const useAnchor = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const navbarRef = useRef<null | HTMLElement>(null)
   const [heroSize, setHeroSize] = useState<number>()
   const countStart = useRef(0)
@@ -10,16 +9,9 @@ const useAnchor = () => {
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
   }
-  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget)
-  }
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null)
-  }
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
   }
 
   const anchorNavigate = (page: string) => {
@@ -51,14 +43,10 @@ const useAnchor = () => {
   }, [navbarRef, setHeroSize])
   return {
     anchorElNav,
-    anchorElUser,
     navbarRef,
     heroSize,
-    setHeroSize,
     handleOpenNavMenu,
-    handleOpenUserMenu,
     handleCloseNavMenu,
-    handleCloseUserMenu,
     anchorNavigate,
   }
 }

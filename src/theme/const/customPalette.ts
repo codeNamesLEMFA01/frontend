@@ -1,13 +1,27 @@
 import { alpha, getContrastRatio } from "@mui/material/styles"
 
-const maleBase = "#118ab2"
+const primary = "#0B4678"
+const secondary = "#6D2E46"
+const light = "#E1D7CD"
+// const maleBase = "#118ab2"
+const maleBase = "#1976D2"
 const maleMain = alpha(maleBase, 0.7)
-const femaleBase = "#ef476f"
+// const femaleBase = "#ef476f"
+const femaleBase = "#A26769"
 const femaleMain = alpha(femaleBase, 0.7)
 const sectionBase = "#e4e8f3"
 const sectionMain = alpha(sectionBase, 0.7)
 
 export const customPalette = {
+  primary: {
+    main: primary,
+  },
+  secondary: {
+    main: secondary,
+  },
+  light: {
+    main: light,
+  },
   male: {
     main: maleMain,
     dark: alpha(maleBase, 0.9),

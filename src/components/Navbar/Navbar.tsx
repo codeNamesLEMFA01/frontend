@@ -1,9 +1,7 @@
 import {
   AppBar,
-  Avatar,
   Box,
   Button,
-  Container,
   IconButton,
   Menu,
   MenuItem,
@@ -13,64 +11,46 @@ import {
 } from "@mui/material"
 
 import logo from "@assets/logo.png"
-import { Adb, Menu as MenuIcon } from "@mui/icons-material"
+import { Menu as MenuIcon, PowerSettingsNew } from "@mui/icons-material"
 
 import { AnchorEnum } from "@src/types/common"
 
 import ScrollTo from "./ScrollTo"
 import useAnchor from "./hooks/useAnchor"
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"]
 const ANCHORS = Object.values(AnchorEnum)
 
 const Navbar = () => {
   const {
     anchorElNav,
-    anchorElUser,
     navbarRef,
     heroSize,
     handleOpenNavMenu,
-    handleOpenUserMenu,
     handleCloseNavMenu,
-    handleCloseUserMenu,
     anchorNavigate,
   } = useAnchor()
 
   return (
-    <ScrollTo threshold={heroSize}>
+    <ScrollTo threshold={heroSize} color={{ in: "white", out: "white" }}>
       <AppBar position="fixed" ref={navbarRef}>
-        <Container maxWidth="xl">
+        <Box mx={2}>
           <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
+            {/* //* DESKTOP LOGO */}
+            <Button
               onClick={() => anchorNavigate("top")}
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-                alignItems: "center",
-                "&:hover": {
-                  cursor: "pointer",
-                },
-              }}
+              disableRipple
+              sx={{ display: { xs: "none", md: "block" } }}
             >
-              {/* <Adb sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
               <Box
                 component={"img"}
                 alt=""
                 src={logo}
-                // width={"10vw"}
                 height={24}
-                sx={{ filter: "grayscale(.5) brightness(.8)" }}
+                sx={{ filter: "grayscale(.5)" }}
               />
-              {/* CODE NAMES */}
-            </Typography>
-
+            </Button>
+            {/*  DESKTOP LOGO END */}
+            {/* //* MOBILE  */}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -101,80 +81,81 @@ const Navbar = () => {
                 }}
               >
                 {ANCHORS.map((anchor) => (
-                  <MenuItem key={anchor} onClick={handleCloseNavMenu}>
+                  <MenuItem key={anchor} onClick={() => anchorNavigate(anchor)}>
                     <Typography textAlign="center">{anchor}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
-            <Adb sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
-              component="a"
-              href="#top"
+              onClick={() => anchorNavigate("top")}
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
+                alignItems: "center",
                 flexGrow: 1,
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".2rem",
+                fontSize: ".8rem",
                 color: "inherit",
                 textDecoration: "none",
+                gap: ".5rem",
               }}
             >
-              LOGO
+              CODE
+              <Box
+                component={"img"}
+                alt=""
+                src={logo}
+                height={18}
+                sx={{ filter: "grayscale(.5)", mr: 0.5 }}
+              />
+              NAMES
             </Typography>
-            {/*//! DESKTOP */}
+            {/* MOBILE END */}
+            {/*//* DESKTOP */}
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {ANCHORS.map((anchor) => (
-                // <Link href={"#anchor_" + anchor}>
-                //   <Button key={anchor} sx={{ my: 2, color: "white", display: "block" }}>
-                //     {anchor}
-                //   </Button>
-                // </Link>
                 <Button
                   key={anchor}
                   onClick={() => anchorNavigate(anchor)}
-                  sx={{ color: "white", display: "block" }}
+                  color="light"
+                  sx={{
+                    display: "block",
+                    fontWeight: 600,
+                    "&:hover": {
+                      color: "white",
+                    },
+                  }}
                 >
                   {anchor}
                 </Button>
               ))}
             </Box>
-
+            {/* DESKTOP END */}
+            {/*//* RIGHT SECTION MOBILE & DESKTOP */}
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Tooltip title="Déconnexion">
+                <IconButton sx={{ p: 0 }}>
+                  <PowerSettingsNew
+                    color="light"
+                    sx={{
+                      ":hover": {
+                        color: "error.main",
+                        transition: "color 0.2s ease-in-out",
+                      },
+                      transition: "color 0.2s ease-in-out",
+                    }}
+                  />
                 </IconButton>
               </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
             </Box>
+            {/* RIGHT SECTION MOBILE & DESKTOP END */}
           </Toolbar>
-        </Container>
+        </Box>
       </AppBar>
     </ScrollTo>
   )

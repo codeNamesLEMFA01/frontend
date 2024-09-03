@@ -8,6 +8,10 @@ interface ScrollHandlerProps {
   window?: () => Window
   threshold?: number
   shadow?: number
+  color?: {
+    in: string
+    out: string
+  }
   children: React.ReactElement
 }
 
@@ -22,8 +26,8 @@ const ScrollHandler = (props: ScrollHandlerProps) => {
 
   return React.cloneElement(props.children, {
     style: {
-      backgroundColor: trigger ? "#0B4678" : "transparent",
-      color: trigger ? "white" : "black",
+      backgroundColor: trigger ? theme.palette.primary.main : "transparent",
+      color: trigger ? props.color?.in || "white" : props.color?.out || "black",
       transition: trigger ? "0.3s" : "0.5s",
       boxShadow: trigger ? shadow : "none",
     },
