@@ -1,7 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material"
 
-import bg from "@assets/hero.medium.jpg"
-import logo from "@assets/logo.png"
+// import bg from "@assets/hero.medium.jpg"
+import bg from "@assets/bb_amer-flag.webp"
+
+// import logo from "@assets/logo.png"
 
 const Hero = () => {
   return (
@@ -9,10 +11,9 @@ const Hero = () => {
       id="hero"
       width={"100vw"}
       sx={{
-        aspectRatio: "7/ 3",
+        aspectRatio: { xs: "4/3", md: "6/3", lg: "7/3" },
         position: "relative",
         justifyContent: "space-between",
-        boxShadow: "0 3px 12px rgba(0, 0, 0, 0.6)",
       }}
     >
       <Box
@@ -20,26 +21,25 @@ const Hero = () => {
         src={bg}
         alt=""
         width={"100%"}
+        height={"100%"}
         sx={{
           position: "absolute",
           objectFit: "cover",
           objectPosition: "center",
-          aspectRatio: "7/ 3",
           zIndex: -1,
-          filter: "blur(5px)",
-          transform: "scale(1.01)",
+          filter: "blur(5px) grayscale(.5)",
         }}
       />
 
       <Stack p={4} direction="row" alignItems="center" justifyContent="center">
-        <Box
+        {/* <Box
           component={"img"}
           alt=""
           src={logo}
           width={"10vw"}
           mt={10}
           sx={{ filter: "grayscale(.5) brightness(.8)" }}
-        />
+        /> */}
       </Stack>
 
       <Stack>

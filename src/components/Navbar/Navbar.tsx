@@ -138,7 +138,7 @@ const Navbar = () => {
             {/* DESKTOP END */}
             {/*//* RIGHT SECTION MOBILE & DESKTOP */}
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Déconnexion">
+              <Tooltip title="Déconnexion" placement="left">
                 <IconButton sx={{ p: 0 }}>
                   <PowerSettingsNew
                     color="light"
