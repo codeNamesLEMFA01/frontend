@@ -1,5 +1,3 @@
-import { MouseEvent, useEffect, useRef, useState } from "react"
-
 import {
   AppBar,
   Avatar,
@@ -20,56 +18,27 @@ import { Adb, Menu as MenuIcon } from "@mui/icons-material"
 import { AnchorEnum } from "@src/types/common"
 
 import ScrollTo from "./ScrollTo"
+import useAnchor from "./hooks/useAnchor"
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"]
 const ANCHORS = Object.values(AnchorEnum)
 
 const Navbar = () => {
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-  const [heroSize, setHeroSize] = useState(0)
-  const navbarRef = useRef<null | HTMLElement>(null)
-
-  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget)
-  }
-  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget)
-  }
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null)
-  }
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
-  }
-
-  const anchorNavigate = (page: string) => {
-    handleCloseNavMenu()
-    const anchor = document.getElementById("anchor_" + page)
-    if (!navbarRef.current) return
-    if (anchor?.offsetTop === undefined) return
-    const navbarHeight = navbarRef.current.clientHeight
-    window.scrollTo({ top: anchor.offsetTop - navbarHeight, behavior: "smooth" })
-  }
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const heroEl = document.getElementById("hero")
-      const navHeight = navbarRef.current ? navbarRef.current.clientHeight : 0
-      const height = heroEl ? heroEl.clientHeight - navHeight : 0
-      setHeroSize(height)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+  const {
+    anchorElNav,
+    anchorElUser,
+    navbarRef,
+    heroSize,
+    handleOpenNavMenu,
+    handleOpenUserMenu,
+    handleCloseNavMenu,
+    handleCloseUserMenu,
+    anchorNavigate,
+  } = useAnchor()
 
   return (
     <ScrollTo threshold={heroSize}>
-      <AppBar position="fixed" ref={navbarRef} id="🎉">
+      <AppBar position="fixed" ref={navbarRef}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
