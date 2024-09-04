@@ -1,3 +1,5 @@
+import { useRef } from "react"
+
 import {
   AppBar,
   Box,
@@ -29,9 +31,14 @@ const Navbar = () => {
     handleCloseNavMenu,
     anchorNavigate,
   } = useAnchor()
+  const mobileLogoRef = useRef(null)
 
   return (
-    <ScrollTo threshold={heroSize} color={{ in: "white", out: "white" }}>
+    <ScrollTo
+      threshold={heroSize}
+      color={{ in: "white", out: "white" }}
+      refElement={mobileLogoRef}
+    >
       <AppBar position="fixed" ref={navbarRef}>
         <Box mx={2}>
           <Toolbar disableGutters>
@@ -88,6 +95,7 @@ const Navbar = () => {
               </Menu>
             </Box>
             <Typography
+              ref={mobileLogoRef}
               variant="h5"
               noWrap
               onClick={() => anchorNavigate("top")}

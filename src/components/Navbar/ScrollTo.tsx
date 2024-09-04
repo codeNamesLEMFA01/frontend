@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import { useTheme } from "@mui/material/styles"
 
@@ -12,6 +12,7 @@ interface ScrollHandlerProps {
     in: string
     out: string
   }
+  refElement?: React.RefObject<HTMLElement>
   children: React.ReactElement
 }
 
@@ -23,6 +24,13 @@ const ScrollHandler = (props: ScrollHandlerProps) => {
     threshold: props.threshold || 0,
     target: props.window ? props.window() : undefined,
   })
+
+  useEffect(() => {
+    if (!props.refElement?.current) return
+    const element = props.refElement.current
+    const { style } = element
+    style.opacity = trigger ? "1" : "0"
+  }, [props.refElement, trigger])
 
   return React.cloneElement(props.children, {
     style: {
