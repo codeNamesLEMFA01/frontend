@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { Dispatch } from "react"
 
 import {
+  Alert,
   Box,
   Button,
   CardActions,
@@ -8,6 +9,7 @@ import {
   CardHeader,
   Collapse,
   InputAdornment,
+  Snackbar,
   Stack,
   TextField,
 } from "@mui/material"
@@ -17,44 +19,25 @@ import { AlternateEmail, Password } from "@mui/icons-material"
 
 import DarkCard from "@src/components/common/DarkCard/DarkCard"
 
-import { EnumFields, IsLogginForm } from "@src/types/login.types"
+import { EnumFields } from "@src/types/auth.types"
 
-import useCheckCredentials from "./hooks/useCheckCredentials"
+import useLoginForm from "./hooks/useLoginForm"
 
-const LoginForm = ({ isLogged }: { isLogged: IsLogginForm }) => {
+interface IProps {
+  setIsConnected: Dispatch<React.SetStateAction<boolean>>
+}
+
+const LoginForm = ({ setIsConnected }: IProps) => {
   const {
     credentials,
     errorField,
     handleChangeCredentialsFields,
-    isErrorToggleFields,
-  } = useCheckCredentials()
-  const [isLogginForm, setIsLogginForm] = useState(isLogged)
-
-  function handleChangeForm() {
-    setIsLogginForm(!isLogginForm)
-  }
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-
-    if (isErrorToggleFields(credentials, isLogginForm)) return
-
-    if (isLogginForm) {
-      // Request to login
-      console.log("LOGGIN FORM ", {
-        email: data.get("email"),
-        password: data.get("password"),
-      })
-    } else {
-      // Request to register
-      console.log("REGISTER FORM ", {
-        email: data.get("email"),
-        password: data.get("password"),
-        confirmPassword: data.get("confirmPassword"),
-      })
-    }
-  }
+    isLoginForm,
+    handleChangeForm,
+    handleSubmit,
+    toast,
+    handleCloseToast,
+  } = useLoginForm({ setIsConnected })
 
   return (
     <Box
@@ -67,6 +50,21 @@ const LoginForm = ({ isLogged }: { isLogged: IsLogginForm }) => {
         position: "relative",
       }}
     >
+      <Snackbar
+        open={toast.isOpen}
+        onClose={handleCloseToast}
+        autoHideDuration={5000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          severity={toast.severity}
+          variant="filled"
+          onClose={handleCloseToast}
+          elevation={6}
+        >
+          {toast.message}
+        </Alert>
+      </Snackbar>
       <Box
         sx={{
           position: "absolute",
@@ -87,7 +85,7 @@ const LoginForm = ({ isLogged }: { isLogged: IsLogginForm }) => {
           >
             <CardHeader
               title="Bienvenue sur Code Names"
-              subheader={isLogginForm ? "Connexion" : "Inscription"}
+              subheader={isLoginForm ? "Connexion" : "Inscription"}
             />
             <CardContent>
               <Stack
@@ -137,7 +135,7 @@ const LoginForm = ({ isLogged }: { isLogged: IsLogginForm }) => {
                     ),
                   }}
                 />
-                <Collapse in={!isLogginForm}>
+                <Collapse in={!isLoginForm}>
                   <TextField
                     required
                     name={EnumFields.CONFIRM_PASSWORD}
@@ -166,8 +164,8 @@ const LoginForm = ({ isLogged }: { isLogged: IsLogginForm }) => {
               </Stack>
             </CardContent>
             <CardActions sx={{ justifyContent: "end", mt: 4, p: 2 }}>
-              <Button variant="outlined" onClick={handleChangeForm}>
-                {isLogginForm ? "Je n'ai pas de compte" : "J'ai déjà un compte"}
+              <Button variant="outlined" onClick={handleChangeForm} color="light">
+                {isLoginForm ? "Je n'ai pas de compte" : "J'ai déjà un compte"}
               </Button>
               <Button
                 variant="contained"
@@ -175,7 +173,7 @@ const LoginForm = ({ isLogged }: { isLogged: IsLogginForm }) => {
                 form="formLogin"
                 sx={{ bgcolor: "male.extralight" }}
               >
-                {isLogginForm ? "Se connecter" : "S'enregistrer"}
+                {isLoginForm ? "Se connecter" : "S'enregistrer"}
               </Button>
             </CardActions>
           </DarkCard>

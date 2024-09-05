@@ -1,13 +1,20 @@
-import { IsLogginForm } from "@src/types/login.types"
+import { useRef, useState } from "react"
+
+import { getToken } from "@src/utils/auth/cookies"
 
 import Login from "./Login/LoginForm"
+import useAuth from "./hooks/useAuth"
 
 const AuthHOC = ({ children }: { children: JSX.Element }) => {
-  const isLogged: IsLogginForm = false
-  const isConnected = false
-  // WAITING FOR API
+  const [isConnected, setIsConnected] = useState(false)
+  const { isError, isSuccess } = useAuth(isConnected)
 
-  if (!isConnected) return <Login isLogged={isLogged} />
+  const tokenRef = useRef(getToken())
+
+  if (isSuccess || isConnected) return children
+
+  if (!tokenRef.current || isError) return <Login setIsConnected={setIsConnected} />
+
   return children
 }
 

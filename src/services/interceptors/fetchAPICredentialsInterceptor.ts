@@ -1,5 +1,5 @@
 import { getToken } from "@src/utils/auth/cookies"
-import { disconnect } from "@src/utils/auth/disconnect"
+import { errorMessageStorage } from "@src/utils/auth/errorMessageStorage"
 
 const BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL
 
@@ -17,7 +17,10 @@ export const fetchAPICredentialsInterceptor = async () => {
 
     const response = await originalFetch(endPoint, initConfig)
 
-    if (response.status === 401) disconnect()
+    if (response.status === 401) {
+      errorMessageStorage.setError("Veuillez vous reconnecter", "warning")
+      window.location.reload()
+    }
 
     return response
   }

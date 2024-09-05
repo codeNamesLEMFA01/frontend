@@ -3,7 +3,7 @@ import { useState } from "react"
 import isEmail from "validator/lib/isEmail"
 import isStrongPassword from "validator/lib/isStrongPassword"
 
-import { EnumFields, ICredentials, IsLogginForm } from "@src/types/login.types"
+import { EnumFields, ICredentials, IsLoginForm } from "@src/types/auth.types"
 
 const PASSWORD_OPTIONS = {
   minLength: 3,
@@ -30,8 +30,8 @@ const MESSAGE: Record<"error" | "valid", Record<EnumFields, string>> = {
 
 const useCheckCredentials = () => {
   const [credentials, setCredentials] = useState<ICredentials>({
-    email: "",
-    password: "",
+    email: "a@a.aa",
+    password: "aaa",
     confirmPassword: "",
   })
   const [errorField, setErrorField] = useState<
@@ -81,7 +81,7 @@ const useCheckCredentials = () => {
 
   function isErrorToggleFields(
     credentials: ICredentials,
-    isLogginForm: IsLogginForm,
+    isLogginForm: IsLoginForm,
   ) {
     const resEmail = isEmail(credentials.email)
     const resPassword = isStrongPassword(credentials.password, PASSWORD_OPTIONS)
