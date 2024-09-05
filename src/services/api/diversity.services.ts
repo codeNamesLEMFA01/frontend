@@ -2,8 +2,7 @@ import { IDiversityResponse } from "@services/types/diversity.type.ts"
 
 import { DateQueryEnum } from "@src/types/common"
 
-const BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL
-const NAMES_URL = `${BASE_URL}/names`
+const NAMES_URL = `/names/diversity`
 
 export const getDiversity = async ({
   startYear,
@@ -13,7 +12,7 @@ export const getDiversity = async ({
   [DateQueryEnum.ENDYEAR]: number
 }): Promise<IDiversityResponse> => {
   const response = await fetch(
-    `${NAMES_URL}/diversity/?start_year=${startYear}&end_year=${endYear}`,
+    `${NAMES_URL}/?start_year=${startYear}&end_year=${endYear}`,
   )
 
   if (!response.ok)

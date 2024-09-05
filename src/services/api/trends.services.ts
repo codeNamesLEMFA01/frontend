@@ -7,8 +7,8 @@ import {
   TrendsTopNamesQueryEnum,
 } from "../types/trends.type"
 
-const BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL
-const NAMES_URL = `${BASE_URL}/names`
+// const BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL
+const NAMES_URL = `/names`
 
 export const getEvolutionName = async (
   name: string | undefined,

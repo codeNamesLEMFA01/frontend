@@ -9,6 +9,9 @@ import TrendsLengthNameComponent from "./components/TrendsComponent/TrendsLength
 import TrendsTopNamesComponent from "./components/TrendsComponent/TrendsTopNamesComponent/TrendsTopNamesComponent"
 import AuthHOC from "./components/auth/AuthHOC"
 import Hero from "./components/hero/Hero"
+import { configApp } from "./config"
+
+configApp()
 
 function App() {
   return (
