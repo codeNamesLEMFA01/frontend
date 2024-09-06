@@ -1,4 +1,4 @@
-import { LoginApi, RegisterApi } from "@src/types/auth.types"
+import { ILogoutApi, LoginApi, RegisterApi } from "@src/types/auth.types"
 
 const BASE_URL = `/auth`
 
@@ -29,5 +29,17 @@ export const postUserLogin = async (formData: FormData): Promise<LoginApi> => {
   })
   const data = await response.json()
 
+  return data
+}
+
+export const postUserLogout = async (): Promise<ILogoutApi> => {
+  const response = await fetch(`${BASE_URL}/logout`, {
+    method: "POST",
+  })
+  if (!response.ok)
+    throw new Error(
+      `🆘 status => ${response.status}, statusText: ${response.statusText}`,
+    )
+  const data = await response.json()
   return data
 }

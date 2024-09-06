@@ -17,6 +17,7 @@ import { Menu as MenuIcon, PowerSettingsNew } from "@mui/icons-material"
 
 import { AnchorEnum } from "@src/types/common"
 
+import useLogout from "../auth/hooks/useLogout"
 import ScrollTo from "./ScrollTo"
 import useAnchor from "./hooks/useAnchor"
 
@@ -32,6 +33,7 @@ const Navbar = () => {
     anchorNavigate,
   } = useAnchor()
   const mobileLogoRef = useRef(null)
+  const { handleLogout } = useLogout()
 
   return (
     <ScrollTo
@@ -147,7 +149,7 @@ const Navbar = () => {
             {/*//* RIGHT SECTION MOBILE & DESKTOP */}
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Déconnexion" placement="left">
-                <IconButton sx={{ p: 0 }}>
+                <IconButton sx={{ p: 0 }} onClick={handleLogout}>
                   <PowerSettingsNew
                     color="light"
                     sx={{

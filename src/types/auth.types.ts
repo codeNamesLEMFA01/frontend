@@ -31,3 +31,7 @@ export interface ILoginSuccessApi {
 }
 
 export type LoginApi = ILoginSuccessApi | IErrorApi
+
+export interface ILogoutApi {
+  message: string
+}
