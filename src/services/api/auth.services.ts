@@ -1,4 +1,4 @@
-import { ILogoutApi, LoginApi, RegisterApi } from "@src/types/auth.types"
+import { ILogoutApi, IUserMeApi, LoginApi, RegisterApi } from "@src/types/auth.types"
 
 const BASE_URL = `/auth`
 
@@ -12,7 +12,7 @@ export const postUserRegister = async (formData: FormData): Promise<RegisterApi>
   return data
 }
 
-export const getUserMe = async () => {
+export const getUserMe = async (): Promise<IUserMeApi> => {
   const response = await fetch(`${BASE_URL}/users/me`)
   if (!response.ok)
     throw new Error(

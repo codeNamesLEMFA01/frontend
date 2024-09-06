@@ -35,3 +35,8 @@ export type LoginApi = ILoginSuccessApi | IErrorApi
 export interface ILogoutApi {
   message: string
 }
+
+export interface IUserMeApi {
+  email: string
+  disabled: boolean
+}
