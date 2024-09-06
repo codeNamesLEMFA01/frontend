@@ -1,22 +1,24 @@
-import { Box, Stack, Typography } from "@mui/material"
+import { Box, Container, Stack, Typography } from "@mui/material"
 
 // import bg from "@assets/hero.medium.jpg"
 import bg from "@assets/bb_amer-flag.webp"
 import logo from "@assets/logo.png"
 import { ChildFriendlyOutlined, WorkspacePremium } from "@mui/icons-material"
 
+import useRandomIntervalNames from "@src/hooks/useRandomIntervalNames"
+import useRandomIntervalNum from "@src/hooks/useRandomIntervalNum"
+
 import { numberWithSpaces } from "@src/utils/numberFormat"
 
 import useHeroInfo from "./hooks/useHeroInfo"
 
 const STYLE = {
-  fontSize: { xs: 12, md: 18 },
+  fontSize: { txt: "clamp(12px, 1.5vw, 24px)", ico: { xs: 18, md: 24, lg: 36 } },
   fontWeight: { xs: 400, md: 600 },
 }
 
 const Hero = () => {
   const { infos } = useHeroInfo()
-
   return (
     <Stack
       id="hero"
@@ -44,71 +46,74 @@ const Hero = () => {
       {/* // BACKGROUND END*/}
 
       {/* //* CENTER INFOS */}
-      <Stack
-        p={{ xs: 0, md: 4 }}
-        px={{ xs: 2, md: 0 }}
-        flex={1}
-        color="light.main"
-        maxWidth={{ xs: "90vw", md: "50%" }}
-        mx={"auto"}
-        mb={{ xs: 0, md: "3vh" }}
-        mt="8vh"
-        textAlign="center"
-        gap={{ xs: 2, md: 8 }}
-      >
-        <Typography
-          variant="h1"
-          textTransform="uppercase"
-          fontWeight={800}
-          letterSpacing={3}
-          fontFamily="Montserrat"
-          alignItems="center"
-          display="flex"
-          justifyContent="center"
-          fontSize={{ xs: 24, md: 36 }}
-        >
-          code
-          <Box component="img" src={logo} width="clamp(50px, 10vw, 200px)" />
-          names
-        </Typography>
-        <Typography
-          fontWeight={STYLE.fontWeight}
-          letterSpacing={1.5}
-          fontFamily="Montserrat"
-          fontSize={STYLE.fontSize}
-        >
-          L'administration américaine de la sécurité sociale (USSSA ou SSA) a rendu
-          publiques les données sur la fréquence des prénoms attribués aux bébés
-          depuis 1880 jusqu'en 2018.
-        </Typography>
-
+      <Container maxWidth="xl" sx={{ height: "100%" }}>
         <Stack
-          sx={{ fontFamily: "Montserrat" }}
-          direction="row"
-          gap={{ xs: 2, md: 10 }}
-          mt={{ xs: 3, md: "auto" }}
-          alignSelf="center"
-          flexWrap="wrap"
+          p={{ xs: 0, md: 4 }}
+          px={{ xs: 2, md: 0 }}
+          flex={1}
+          color="light.main"
+          height="80%"
+          maxHeight="70vh"
+          mx="auto"
+          mb={{ xs: 0, md: "3vh" }}
+          mt="8vh"
+          textAlign="center"
+          gap={{ xs: 2, md: 8 }}
         >
-          <Info
-            number={infos?.total_births || 0}
-            txt={"naissances"}
-            icon={<ChildFriendlyOutlined sx={STYLE.fontSize} />}
-          />
-          <Info
-            number={infos?.top_male_name.total_births || 0}
-            txt={infos?.top_male_name.name || "     "}
-            icon={<WorkspacePremium sx={STYLE.fontSize} />}
-            color="male.dark"
-          />
-          <Info
-            number={infos?.top_female_name.total_births || 0}
-            txt={infos?.top_female_name.name || "     "}
-            icon={<WorkspacePremium sx={STYLE.fontSize} />}
-            color="female.dark"
-          />
+          <Typography
+            variant="h1"
+            textTransform="uppercase"
+            fontWeight={800}
+            letterSpacing={3}
+            fontFamily="Montserrat"
+            alignItems="center"
+            display="flex"
+            justifyContent="center"
+            fontSize={"clamp(24px, 5vw, 150px)"}
+          >
+            code
+            <Box component="img" src={logo} width="clamp(50px, 10vw, 200px)" />
+            names
+          </Typography>
+          <Typography
+            fontWeight={STYLE.fontWeight}
+            letterSpacing={1.5}
+            fontFamily="Montserrat"
+            fontSize={STYLE.fontSize.txt}
+          >
+            L'administration américaine de la sécurité sociale (USSSA ou SSA) a rendu
+            publiques les données sur la fréquence des prénoms attribués aux bébés
+            depuis <TypoDate date="1880 " /> jusqu'en <TypoDate date="2018" />.
+          </Typography>
+
+          <Box
+            display="grid"
+            gridAutoFlow="column"
+            gridAutoColumns="1fr"
+            gap={{ xs: 2, md: 10 }}
+            mt={{ xs: 3, md: "auto" }}
+            alignSelf="center"
+          >
+            <Info
+              number={infos?.total_births}
+              txt="naissances"
+              icon={<ChildFriendlyOutlined sx={{ fontSize: STYLE.fontSize.ico }} />}
+            />
+            <Info
+              number={infos?.top_male_name.total_births}
+              txt={infos?.top_male_name.name}
+              icon={<WorkspacePremium sx={{ fontSize: STYLE.fontSize.ico }} />}
+              color="male.dark"
+            />
+            <Info
+              number={infos?.top_female_name.total_births}
+              txt={infos?.top_female_name.name}
+              icon={<WorkspacePremium sx={{ fontSize: STYLE.fontSize.ico }} />}
+              color="female.dark"
+            />
+          </Box>
         </Stack>
-      </Stack>
+      </Container>
       {/* // CENTER INFOS END */}
 
       {/* //* FOOTER */}
@@ -136,12 +141,19 @@ const Hero = () => {
 export default Hero
 
 interface IInfo {
-  number: number
-  txt: string
+  number?: number
+  txt?: string
   icon: JSX.Element
   color?: string
 }
 const Info = ({ number, txt, icon, color }: IInfo) => {
+  const { num } = useRandomIntervalNum({
+    stopCondition: number !== undefined,
+    min: 1_000_000,
+    max: 999_999_999,
+  })
+  const { name } = useRandomIntervalNames({ stopCondition: txt !== undefined })
+
   return (
     <Box
       sx={{
@@ -163,21 +175,34 @@ const Info = ({ number, txt, icon, color }: IInfo) => {
           <Typography
             fontFamily="Montserrat"
             fontWeight={STYLE.fontWeight}
-            fontSize={STYLE.fontSize}
+            fontSize={STYLE.fontSize.txt}
           >
-            {numberWithSpaces(number)}
+            {numberWithSpaces(number ?? num)}
           </Typography>
           <Typography
             textTransform="capitalize"
             letterSpacing={2}
             fontFamily="Montserrat"
             fontWeight={STYLE.fontWeight}
-            fontSize={STYLE.fontSize}
+            fontSize={STYLE.fontSize.txt}
           >
-            {txt}
+            {txt ?? name}
           </Typography>
         </Box>
       </Stack>
     </Box>
+  )
+}
+
+const TypoDate = ({ date }: { date: string }) => {
+  return (
+    <Typography
+      component="span"
+      color="common.white"
+      fontWeight={{ xs: 500, md: 900 }}
+      fontSize="clamp(14px, 1.8vw, 28px)"
+    >
+      {date}
+    </Typography>
   )
 }
