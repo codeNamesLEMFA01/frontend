@@ -12,9 +12,11 @@ import {
   Snackbar,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material"
 
 import bg from "@assets/bb_amer-flag.webp"
+import logo from "@assets/logo.png"
 import { AlternateEmail, Password } from "@mui/icons-material"
 
 import DarkCard from "@src/components/common/DarkCard/DarkCard"
@@ -26,7 +28,7 @@ import useLoginForm from "./hooks/useLoginForm"
 interface IProps {
   setIsConnected: Dispatch<React.SetStateAction<boolean>>
 }
-
+const SUBHEADER_SENTENCE = "-vous pour accéder aux statistiques de code names"
 const LoginForm = ({ setIsConnected }: IProps) => {
   const {
     credentials,
@@ -84,8 +86,25 @@ const LoginForm = ({ setIsConnected }: IProps) => {
             elevation={24}
           >
             <CardHeader
-              title="Bienvenue sur Code Names"
-              subheader={isLoginForm ? "Connexion" : "Inscription"}
+              title={
+                <Typography
+                  textTransform="uppercase"
+                  fontFamily="Montserrat"
+                  fontWeight={700}
+                  fontSize={24}
+                  letterSpacing={3}
+                  textAlign="center"
+                >
+                  code
+                  <Box component="img" src={logo} width={48} />
+                  names
+                </Typography>
+              }
+              subheader={
+                isLoginForm
+                  ? `Connectez${SUBHEADER_SENTENCE}`
+                  : `Inscrivez${SUBHEADER_SENTENCE}`
+              }
             />
             <CardContent>
               <Stack
