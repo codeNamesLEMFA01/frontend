@@ -4,7 +4,7 @@ import { AlertColor } from "@mui/material"
 
 import { postUserLogin, postUserRegister } from "@src/services/api/auth.services"
 
-import { errorMessageStorage } from "@src/utils/auth/errorMessageStorage"
+import { storageMessage } from "@src/utils/auth/storageMessage"
 
 import { isApiError } from "@src/types/guards/auth.guard"
 
@@ -19,8 +19,8 @@ interface IToast {
   severity: AlertColor
 }
 const useLoginForm = ({ setIsConnected }: IProps) => {
-  const toastError = errorMessageStorage
-  const { message, severity } = toastError.getError()
+  const toastError = storageMessage
+  const { message, severity } = toastError.getMessage()
   const {
     credentials,
     errorField,
@@ -30,7 +30,7 @@ const useLoginForm = ({ setIsConnected }: IProps) => {
   const [isLoginForm, setIsLoginForm] = useState(true)
 
   const [toast, setToast] = useState<IToast>({
-    isOpen: toastError.isError(),
+    isOpen: toastError.haveMessage(),
     message,
     severity,
   })
@@ -57,11 +57,11 @@ const useLoginForm = ({ setIsConnected }: IProps) => {
       : await postUserRegister(data)
 
     if (isApiError(isConnected)) {
-      toastError.setError(isConnected.detail, "error")
+      toastError.setMessage(isConnected.detail, "error")
       window.location.reload()
       return
     }
-    toastError.clearError()
+    toastError.clearMessage()
     setIsConnected(true)
   }
   return {
