@@ -30,8 +30,8 @@ const MESSAGE: Record<"error" | "valid", Record<EnumFields, string>> = {
 
 const useCheckCredentials = () => {
   const [credentials, setCredentials] = useState<ICredentials>({
-    email: "a@a.aa",
-    password: "aaa",
+    email: "",
+    password: "",
     confirmPassword: "",
   })
   const [errorField, setErrorField] = useState<
