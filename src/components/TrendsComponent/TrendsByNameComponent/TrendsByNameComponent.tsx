@@ -19,6 +19,8 @@ import {
 } from "@src/components/common/Checkboxes"
 import { TypoNumber } from "@src/components/common/Typo"
 
+import { AnchorEnum } from "@src/types/common"
+
 import ResponsivePlot from "../../graphs/ResponsivePlot"
 import SectionLayout from "../../layout/SectionLayout"
 import useTrendsName from "./hooks/useTrendsName"
@@ -44,6 +46,7 @@ const TrendsByNameComponent = () => {
 
   return (
     <SectionLayout
+      id={AnchorEnum.SECT_EVOLUTION}
       title="Évolution"
       titleIcon={<TrendingUpIcon sx={{ fontSize: "inherit", color: "green" }} />}
       description="Dynamiques culturelles et sociales qui influencent le choix des prénoms."

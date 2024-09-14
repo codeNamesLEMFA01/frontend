@@ -7,6 +7,8 @@ import { GroupFormControlLabelCheckboxesMaleAndFemale } from "@src/components/co
 import ResponsivePlot from "@src/components/graphs/ResponsivePlot"
 import SectionLayout from "@src/components/layout/SectionLayout"
 
+import { AnchorEnum } from "@src/types/common"
+
 import TrendsLengthInfo from "./TrendsLengthInfo"
 import useTrendsLengthName from "./hooks/useTrendsLengthName"
 
@@ -22,6 +24,7 @@ const TrendsLengthNameComponent = () => {
 
   return (
     <SectionLayout
+      id={AnchorEnum.SECT_LENGTH}
       title="Dans le temps"
       titleIcon={<AccessTime color="info" />}
       subtitle="Longeur des noms"

@@ -18,6 +18,8 @@ import { TypoNumber } from "@components/common/Typo.tsx"
 import { Diversity2 } from "@mui/icons-material"
 import { IInfo } from "@services/types/diversity.type.ts"
 
+import { AnchorEnum } from "@src/types/common"
+
 import SliderDateRange from "../common/SliderDateRange/SliderDateRange"
 import ResponsivePlot from "../graphs/ResponsivePlot"
 import SectionLayout from "../layout/SectionLayout"
@@ -44,6 +46,7 @@ const DiversityComponent = () => {
 
   return (
     <SectionLayout
+      id={AnchorEnum.SECT_DIVERSITY}
       bglight
       title="Diversité"
       titleIcon={<Diversity2 sx={{ fontSize: "inherit", color: "orange" }} />}
